@@ -23,6 +23,8 @@ GLint stencilBits;
 static int viewx = 100;
 static int viewy = 150;
 static int viewz = 250;
+GLuint _textureId;           //ID OpenGL untuk tekstur
+GLuint texture[5];
 
 float rot = 0;
 
@@ -186,6 +188,7 @@ void initRendering() {
 	glEnable(GL_LIGHT0);
 	glEnable(GL_NORMALIZE);
 	glShadeModel(GL_SMOOTH);
+		
 }
 
 //Loads a terrain from a heightmap.  The heights of the terrain range from
@@ -273,6 +276,65 @@ void drawSceneTanah(Terrain *terrain, GLfloat r, GLfloat g, GLfloat b) {
 }
 
 unsigned int LoadTextureFromBmpFile(char *filename);
+
+void dinding(float x1,float y1,float z1,float x2,float y2,float z2)
+{
+//depan
+glTexCoord2f(0.0, 0.0);
+glVertex3f(x1,y1,z1);
+glTexCoord2f(0.0, 1.0);
+glVertex3f(x2,y1,z1);
+glTexCoord2f(1.0, 1.0);
+glVertex3f(x2,y2,z1);
+glTexCoord2f(1.0, 0.0);
+glVertex3f(x1,y2,z1);
+//atas
+glTexCoord2f(0.0, 0.0);
+glVertex3f(x1,y2,z1);
+glTexCoord2f(0.0, 1.0);
+glVertex3f(x2,y2,z1);
+glTexCoord2f(1.0, 1.0);
+glVertex3f(x2,y2,z2);
+glTexCoord2f(1.0, 0.0);
+glVertex3f(x1,y2,z2);
+//belakang
+glTexCoord2f(0.0, 0.0);
+glVertex3f(x1,y2,z2);
+glTexCoord2f(0.0, 1.0);
+glVertex3f(x2,y2,z2);
+glTexCoord2f(1.0, 1.0);
+glVertex3f(x2,y1,z2);
+glTexCoord2f(1.0, 0.0);
+glVertex3f(x1,y1,z2);
+//bawah
+glTexCoord2f(0.0, 0.0);
+glVertex3f(x1,y1,z2);
+glTexCoord2f(1.0, 0.0);
+glVertex3f(x2,y1,z2);
+glTexCoord2f(1.0, 1.0);
+glVertex3f(x2,y1,z1);
+glTexCoord2f(0.0, 1.0);
+glVertex3f(x1,y1,z1);
+//samping kiri
+glTexCoord2f(0.0, 0.0);
+glVertex3f(x1,y1,z1);
+glTexCoord2f(1.0, 0.0);
+glVertex3f(x1,y2,z1);
+glTexCoord2f(1.0, 1.0);
+glVertex3f(x1,y2,z2);
+glTexCoord2f(0.0, 1.0);
+glVertex3f(x1,y1,z2);
+//samping kanan
+glTexCoord2f(0.0, 0.0);
+glVertex3f(x2,y1,z1);
+glTexCoord2f(1.0, 0.0);
+glVertex3f(x2,y2,z1);
+glTexCoord2f(1.0, 1.0);
+glVertex3f(x2,y2,z2);
+glTexCoord2f(0.0, 1.0);
+glVertex3f(x2,y1,z2);
+}
+
 
 void papan()
 {
@@ -381,12 +443,13 @@ void papan()
 
 void rumah()
 {
-    glPushMatrix();
-    glTranslatef(-80.0, 0.0, -80.5);
-    glColor3f(0.9f, 0.4f, 0.7f);
-    glScalef(80.0, 30.5, 100.5);
-    glutSolidCube(1.0f);
-    glPopMatrix();
+     
+    //glPushMatrix();
+    //glTranslatef(-80.0, 0.0, -80.5);
+    //glColor3f(0.9f, 0.4f, 0.7f);
+    //glScalef(80.0, 30.5, 100.5);
+    //glutSolidCube(1.0f);
+   // glPopMatrix();
     
     //atap
     glPushMatrix();
@@ -396,6 +459,7 @@ void rumah()
     glScalef(40.0, 40.0, 100.0);
     glutSolidCube(1.0f);
     glPopMatrix();
+
     
     glPushMatrix();
     glTranslatef(-65.5, 3.5, -80.5);
@@ -1006,28 +1070,28 @@ void jembatan()
     glPopMatrix();
     
     //papan bawah
-    glPushMatrix();
-    glTranslatef(97.0, -7.5, -120.0);
-    glRotatef(160,0,0,1);
-    glColor3f(0.3f, 0.3f, 0.7f);
-    glScalef(60.0, 2.0, 40.5);
-    glutSolidCube(1.0f);
-    glPopMatrix();
+   // glPushMatrix();
+    //glTranslatef(97.0, -7.5, -120.0);
+    //glRotatef(160,0,0,1);
+    //glColor3f(0.3f, 0.3f, 0.7f);
+    //glScalef(60.0, 2.0, 40.5);
+    //glutSolidCube(1.0f);
+    //glPopMatrix();
     
-    glPushMatrix();
-    glTranslatef(44.0, 2.5, -120.0);
-    glColor3f(0.3f, 0.3f, 0.7f);
-    glScalef(55.0, 2.0, 40.5);
-    glutSolidCube(1.0f);
-    glPopMatrix();
+   // glPushMatrix();
+    //glTranslatef(44.0, 2.5, -120.0);
+    //glColor3f(0.3f, 0.3f, 0.7f);
+    //glScalef(55.0, 2.0, 40.5);
+   // glutSolidCube(1.0f);
+   // glPopMatrix();
     
-    glPushMatrix();
-    glTranslatef(-10.0, -7.5, -120.0);
-    glRotatef(20,0,0,1);
-    glColor3f(0.3f, 0.3f, 0.7f);
-    glScalef(60.0, 2.0, 40.5);
-    glutSolidCube(1.0f);
-    glPopMatrix();
+    //glPushMatrix();
+  //  glTranslatef(-10.0, -7.5, -120.0);
+    //glRotatef(20,0,0,1);
+    //glColor3f(0.3f, 0.3f, 0.7f);
+    //glScalef(60.0, 2.0, 40.5);
+    //glutSolidCube(1.0f);
+    //glPopMatrix();
     
     //railing tengah
     glPushMatrix();
@@ -1632,7 +1696,7 @@ void display(void) {
 	glPopMatrix();
 
 	glPushMatrix();
-	//glBindTexture(GL_TEXTURE_3D, texture[0]);
+
 	drawSceneTanah(_terrainTanah, 0.4f, 0.4f, 0.4f);
 	glPopMatrix();
 
@@ -1641,6 +1705,138 @@ void display(void) {
 	drawSceneTanah(_terrainAir, 0.0f, 0.2f, 0.5f);
 	glPopMatrix();
 	
+    //teksture jalan
+	glPushMatrix();
+	glBindTexture(GL_TEXTURE_2D, texture[0]);
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0, 0.0);
+    glVertex3d(170,-1,190);
+    glTexCoord2f(1.0, 0.0);
+    glVertex3d(220,-1,190);
+    glTexCoord2f(1.0, 5.0);
+    glVertex3d(220,-1,-190);
+    glTexCoord2f(0.0, 5.0);
+    glVertex3d(170,-1,-190);
+    glEnd();
+    glPopMatrix();
+    
+    //teksture tembok
+    //depan
+   	glPushMatrix();
+	glBindTexture(GL_TEXTURE_2D, texture[2]);
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0, 0.0);
+    glVertex3d(-40,15,-30);
+    glTexCoord2f(1.0, 0.0);
+    glVertex3d(-40,-10,-30);
+    glTexCoord2f(1.0, 3.0);
+    glVertex3d(-40,-10,-131);
+    glTexCoord2f(0.0, 3.0);
+    glVertex3d(-40,15,-131);
+    glEnd();
+    glPopMatrix();
+     //samping
+   	glPushMatrix();
+	glBindTexture(GL_TEXTURE_2D, texture[2]);
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0, 0.0);
+    glVertex3d(-40,-10,-131);
+    glTexCoord2f(2.0, 0.0);
+    glVertex3d(-120,-10,-131);
+    glTexCoord2f(2.0, 1.0);
+    glVertex3d(-120,15,-131);
+    glTexCoord2f(0.0, 1.0);
+    glVertex3d(-40,15,-131);
+    glEnd();
+    glPopMatrix();
+   	glPushMatrix();
+	glBindTexture(GL_TEXTURE_2D, texture[2]);
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0, 0.0);
+    glVertex3d(-40,-10,-30);
+    glTexCoord2f(2.0, 0.0);
+    glVertex3d(-40,15,-30);
+    glTexCoord2f(1.0, 2.0);
+    glVertex3d(-120,15,-30);
+    glTexCoord2f(0.0, 2.0);
+    glVertex3d(-120,-10,-30);
+    glEnd();
+    glPopMatrix();
+    
+     //belakang
+   	glPushMatrix();
+	glBindTexture(GL_TEXTURE_2D, texture[2]);
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0, 0.0);
+    glVertex3d(-120,-10,-30);
+    glTexCoord2f(1.0, 0.0);
+    glVertex3d(-120,15,-30);
+    glTexCoord2f(1.0, 3.0);
+    glVertex3d(-120,15,-131);
+    glTexCoord2f(0.0, 3.0);
+    glVertex3d(-120,-10,-131);
+    glEnd();
+    glPopMatrix();
+    
+    //teksture Sungai
+   	glPushMatrix();
+	glBindTexture(GL_TEXTURE_2D, texture[1]);
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0, 0.0);
+    glVertex3d(-10,-10,190);
+    glTexCoord2f(1.0, 0.0);
+    glVertex3d(115,-10,190);
+    glTexCoord2f(1.0, 5.0);
+    glVertex3d(115,-10,-190);
+    glTexCoord2f(0.0, 5.0);
+    glVertex3d(-10,-10,-190);
+    glEnd();
+    glPopMatrix();
+    
+    //teksture jembatan
+    glPushMatrix();
+	glBindTexture(GL_TEXTURE_2D, texture[3]);
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0, 0.0);
+    glVertex3d(17,2,-100);
+    glTexCoord2f(1.0, 0.0);
+    glVertex3d(70,2,-100);
+    glTexCoord2f(1.0, 1.0);
+    glVertex3d(70,2,-140);
+    glTexCoord2f(0.0, 1.0);
+    glVertex3d(17,2,-140);
+    glEnd();
+    glPopMatrix();
+ 
+     glPushMatrix();
+	glBindTexture(GL_TEXTURE_2D, texture[3]);
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0, 0.0);
+    glVertex3d(-15,-10,-100);
+    glTexCoord2f(1.0, 0.0);
+    glVertex3d(17,2,-100);
+    glTexCoord2f(1.0, 1.0);
+    glVertex3d(17,2,-140);
+    glTexCoord2f(0.0, 1.0);
+    glVertex3d(-15,-10,-140);
+    glEnd();
+    glPopMatrix();
+
+     glPushMatrix();
+	glBindTexture(GL_TEXTURE_2D, texture[3]);
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0, 0.0);
+    glVertex3d(70,2,-100);
+    glTexCoord2f(1.0, 0.0);
+    glVertex3d(102,-10,-100);
+    glTexCoord2f(1.0, 1.0);
+    glVertex3d(102,-10,-140);
+    glTexCoord2f(0.0, 1.0);
+    glVertex3d(70,2,-140);
+    glEnd();
+    glPopMatrix();
+        
+    
 	jembatan();
     papan();
 	rumah();
@@ -1674,7 +1870,55 @@ void init(void) {
 	_terrainAir = loadTerrain("heightmapAir.bmp", 20);
 
 	//binding texture
+	Image* image1= loadBMP("jalan.bmp");
+		if (image1 == NULL) {
+        printf("Image was not returned from loadTexture\n");
+        exit(0);
+        }
+        Image* image2= loadBMP("sungai.bmp");
+		if (image2 == NULL) {
+        printf("Image was not returned from loadTexture\n");
+        exit(0);
+        }
+        Image* image3= loadBMP("tembok.bmp");
+		if (image3 == NULL) {
+        printf("Image was not returned from loadTexture\n");
+        exit(0);
+        }
+        Image* image4= loadBMP("papan.bmp");
+		if (image4 == NULL) {
+        printf("Image was not returned from loadTexture\n");
+        exit(0);
+        }
+	glGenTextures(5,texture);
 
+//binding texture untuk membuat texture 2D
+glBindTexture(GL_TEXTURE_2D, texture[0]);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+glTexImage2D(GL_TEXTURE_2D, 0, 3, image1->width, image1->height, 0, GL_RGB,
+GL_UNSIGNED_BYTE, image1->pixels);
+
+glBindTexture(GL_TEXTURE_2D, texture[1]);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+glTexImage2D(GL_TEXTURE_2D, 0, 3, image2->width, image2->height, 0, GL_RGB,
+GL_UNSIGNED_BYTE, image2->pixels);
+
+glBindTexture(GL_TEXTURE_2D, texture[2]);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+glTexImage2D(GL_TEXTURE_2D, 0, 3, image3->width, image3->height, 0, GL_RGB,
+GL_UNSIGNED_BYTE, image3->pixels);
+
+glBindTexture(GL_TEXTURE_2D, texture[3]);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+glTexImage2D(GL_TEXTURE_2D, 0, 3, image4->width, image4->height, 0, GL_RGB,
+GL_UNSIGNED_BYTE, image4->pixels);
+
+glEnable(GL_TEXTURE_2D);
+glShadeModel(GL_FLAT);
 }
 
 static void kibor(int key, int x, int y) {
